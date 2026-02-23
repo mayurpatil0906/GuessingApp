@@ -1,34 +1,26 @@
 import java.util.*;
-
 public class GuessingApp {
 
-    private final int MIN = 1;
-    private final int MAX = 100;
-    private final int MAX_ATTEMPTS = 7;
-    private final int MAX_HINTS = 3;
+    public static void main(String[] args) {
 
-    int targetNumber;
+        System.out.println("Welcome to Guessing App");
 
-    public GuessingApp() {
-        Random random = new Random();
-        this.targetNumber = random.nextInt(MAX - MIN + 1) + MIN;
-    }
+        GameConfig config = new GameConfig();
+        config.showRules();
 
-    public int getTargetNumber() {
-        return targetNumber;
-    }
+        Scanner sc=new Scanner(System.in);
+        int attempts=0;
+        while(attempts<config.getMaxAttempts()){
+            System.out.print("Enter your Guess :");
+            int guess = sc.nextInt();
+            attempts++;
 
-    public int getMaxAttempts() {
-        return MAX_ATTEMPTS;
-    }
+            String result =GuessValidator.validateGuess(guess,config.getTargetNumber());
+            System.out.println(result);
 
-    public int getMaxHints() {
-        return MAX_HINTS;
-    }
-
-    public void showRules() {
-        System.out.println("Guess a number between " + MIN + " and " + MAX);
-        System.out.println("You have " + MAX_ATTEMPTS + " attempts");
-        System.out.println("Hints will be provided after wrong guesses");
+            if("CORRECT".equals(result)){
+                break;
+            }
+        }
     }
 }
