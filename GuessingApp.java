@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class GuessingApp {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidInputException{
 
         System.out.println("Welcome to the Guessing App");
         System.out.println();
@@ -17,7 +17,7 @@ public class GuessingApp {
 
         while (attempts < config.getMaxAttempts()) {
             System.out.println("Enter your guess: ");
-            int guess = sc.nextInt();
+            int guess = ValidationService.validateInput(sc.nextInt());
             attempts++;
 
             String result = GuessValidator.validateGuess(guess, config.getTargetNumber());
