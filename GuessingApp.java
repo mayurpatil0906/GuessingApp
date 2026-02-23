@@ -1,37 +1,85 @@
 import java.util.Scanner;
 
-public class GuessingApp {
+ 
 
-    public static void main(String[] args) throws InvalidInputException{
+public class GuessingAPP {
+
+ 
+
+    public static void main(String[] args) throws InvalidInputException {
 
         System.out.println("Welcome to the Guessing App");
-        System.out.println();
+
+ 
+
+       
 
         GameConfig config = new GameConfig();
+
         config.showRules();
 
-        Scanner sc = new Scanner(System.in);
+ 
 
-        int attempts = 0;         
-        int hintCount = 0; 
+        int attempts = 0;
 
-        while (attempts < config.getMaxAttempts()) {
-            System.out.println("Enter your guess: ");
-            int guess = ValidationService.validateInput(sc.nextInt());
-            attempts++;
+        int hintsUsed = 0;
 
-            String result = GuessValidator.validateGuess(guess, config.getTargetNumber());
-            System.out.println(result);
+ 
 
-            if ("CORRECT".equals(result)) {
-                System.out.println("You got it in " + attempts + " attempt(s). 🎉");
-                break;
+        try (Scanner scanner = new Scanner(System.in)) {
+
+            while (attempts < config.getMaxAttempts()) {
+
+ 
+
+                System.out.print("Enter your guess: ");
+
+ 
+
+               
+
+                int guess = ValidationService.validateInput(scanner.nextLine());
+
+                attempts++;
+
+ 
+
+                String result = GuessValidator.validateGuess(
+
+                        guess, config.getTargetNumber());
+
+ 
+
+               
+
+                if (!"CORRECT".equals(result) && hintsUsed < config.getMaxHints()) {
+
+                    hintsUsed++;
+
+                    System.out.println(
+
+                        HintService.generateHint(config.getTargetNumber(), hintsUsed)
+
+                    );
+
+                }
+
+ 
+
+                System.out.println(result);
+
+ 
+
+                if ("CORRECT".equals(result)) {
+
+                    break;
+
+                }
+
             }
-            if(hintCount<config.getMaxHints()){
-                hintCount++;
-                String hint=HintService.generateHint(config.getTargetNumber(),hintCount);
-                System.out.println(hint);
-            }
-            
+
+        }
+
     }
-}}
+
+}
