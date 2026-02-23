@@ -2,36 +2,56 @@ import java.util.Scanner;
 
 public class GuessingApp {
 
-    public static void main(String[] args) throws InvalidInputException{
+    public static void main(String[] args) {
 
-        System.out.println("Welcome to the Guessing App");
-        System.out.println();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Welcome to Guessing App");
+
+        System.out.print("Enter Player Name: ");
+        String player = sc.nextLine();
 
         GameConfig config = new GameConfig();
         config.showRules();
 
-        Scanner sc = new Scanner(System.in);
-
-        int attempts = 0;         
-        int hintCount = 0; 
+        int attempts = 0;
+        boolean win = false;
 
         while (attempts < config.getMaxAttempts()) {
-            System.out.println("Enter your guess: ");
-            int guess = ValidationService.validateInput(sc.nextInt());
+
+            System.out.print("Enter your guess: ");
+
+            String input = sc.nextLine();
+            int guess;
+
+            try {
+                guess = ValidationService.validateInput(input);
+            } catch (InvalidInputException e) {
+                
+                System.out.println(e.getMessage());
+                System.out.println();
+                continue;
+            }
+
             attempts++;
 
-            String result = GuessValidator.validateGuess(guess, config.getTargetNumber());
+            String result = GuessValidator.validateGuess(
+                    guess, config.getTargetNumber());
+
+            String hint = HintService.generateHint(
+                    config.getTargetNumber(), attempts);
+
+            System.out.println(hint);
             System.out.println(result);
 
-            if ("CORRECT".equals(result)) {
-                System.out.println("You got it in " + attempts + " attempt(s). 🎉");
+            if ("CORRECT".equalsIgnoreCase(result)) {
+                win = true;
                 break;
             }
-            if(hintCount<config.getMaxHints()){
-                hintCount++;
-                String hint=HintService.generateHint(config.getTargetNumber(),hintCount);
-                System.out.println(hint);
-            }
-            
+        }
+
+        StorageService.saveResult(player, attempts, win);
+
+        sc.close();
     }
-}}
+}
