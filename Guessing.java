@@ -35,8 +35,7 @@ class GameConfig {
     
 }
 public class Guessing {
-   public Guessing() {
-   }
+   
 
    public static void main(String[] var0) {
       System.out.println("Wellcome to Guessing App");
