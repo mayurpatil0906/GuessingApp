@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class StorageService{
 	public static void saveResult(String player, int attempts, boolean win){
-		//System.out.println("Hii")
+		
 		try(BufferedWriter writer = new BufferedWriter(
 			new FileWriter("game_results.txt", true)
 		)){

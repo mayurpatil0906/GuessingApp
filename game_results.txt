@@ -1,1 +1,6 @@
 Player: mayur, Attempts: 7, Result: LOSE
+Player: mayur, Attempts: 7, Result: LOSE
+Player: mayur, Attempts: 7, Result: LOSE
+Player: mayur, Attempts: 7, Result: LOSE
+Player: mayur, Attempts: 7, Result: LOSE
+Player: mayur, Attempts: 7, Result: LOSE
